@@ -35,13 +35,15 @@
 		}
 		path.arrow {
 			
-			stroke:#bdbdbd;
-			stroke-width:2;
 			
+			stroke-width:5;
+			
+
 			&.jump {
 				stroke:none;
-				fill:#bdbdbd;
-				fill-opacity:0.8;
+				//fill:#bdbdbd;
+				fill-opacity:0.9;
+				fill:url(#jump);
 			}
 		}
 		path.shadow {
@@ -54,14 +56,29 @@
 		circle {
 			fill:#bdbdbd;
 		}
+		path {
+			stroke:#bdbdbd;
+		}
+		path.left {
+			stroke:url(#left);
+		}
+		path.right {
+			stroke:url(#right);
+		}
 	}
 	g.dem {
 		path {
-			stroke:$dem;
+			//stroke:$dem;
+			stroke:url(#right);
 		}
 		circle {
 			fill:$dem;
 		}
+		&.side2 {
+			circle {
+				fill:$dem-evasive;
+			}
+		} 
 		rect {
 			fill:$dem;
 		}
@@ -72,7 +89,8 @@
 
 	g.gop {
 		path {
-			stroke:$gop;
+			//stroke:$gop;
+			stroke:url(#left);
 		}
 		rect {
 			fill:$gop;
@@ -80,6 +98,11 @@
 		circle {
 			fill:$gop;
 		}
+		&.side2 {
+			circle {
+				fill:$gop-evasive;
+			}
+		} 
 		line.against {
 			stroke:$gop;
 		}

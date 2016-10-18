@@ -1,14 +1,19 @@
 .question {
 	width:100%;
 	margin:10px auto;
+	h2.question-title {
+		@include fs-header(2);
+		margin:0 10px;
+		color:#767676;
+	}
 	p.question-summary {
-		@include fs-headline(2);
-		margin:0 20px;
+		@include fs-bodyCopy(1);
+		margin:0 10px;
 		@include mq(tablet) {
 			margin:0 20px;
-			font-size:24px;
-			line-height: 28px;
-			text-align: center;
+			//font-size:24px;
+			//line-height: 28px;
+			//text-align: center;
 		}
 	}
 	div.dialogue {
@@ -35,6 +40,12 @@
 					stroke-dasharray:1,5;
 					shape-rendering: crispEdges;
 				}
+			}
+			.stop1 {
+				stop-color:red;
+			}
+			.stop2 {
+				stop-color:green;
 			}
 		}
 		div.key-concepts {

@@ -39,8 +39,8 @@ export default function Debate(data,options) {
 
 	let xscale=scaleLinear().domain([-2,2])
 					.range([
-						(box.width)/4+(box.width/2)*0,
-						(box.width)/4+(box.width/2)*((0+1)%2)
+						(box.width)/4,
+						(box.width)/4+(box.width/2)
 					]);
 
 	let questions=[];

@@ -51,9 +51,13 @@ export default function Question(question_data,options) {
 	let INTRO_HEIGHT=42,
 		ANSWER_HEIGHT=42,
 		CURVE_DISTANCE=1/2.5;
-	let question=container.append("p")
-						.attr("class","question-summary")
+	container.append("h2")
+						.attr("class","question-title")
 						.html(question_text || "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
+	container.append("p")
+						.attr("class","question-summary")
+						.html("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ullam, corporis dicta dolor deserunt voluptate, possimus accusamus eligendi.")
+
 	container=container.append("div").attr("class","dialogue");
 	
 	let svg=container.append("svg")
@@ -61,6 +65,9 @@ export default function Question(question_data,options) {
 					.attr("height",INTRO_HEIGHT+answers.length*ANSWER_HEIGHT+(margins.top+margins.bottom))
 
 	let box = svg.node().getBoundingClientRect();
+
+
+
 	let WIDTH=box.width;
 	options.xscale.range([
 		0,
@@ -68,8 +75,11 @@ export default function Question(question_data,options) {
 	]);
 
 	let defs=svg.append("defs");
-	addArrowDefs(defs);
+	//addArrowDefs(defs);
 	addShadow(defs);
+	addGradient(defs);
+
+	
 
 	let axes=svg.append("g")
 			.attr("class","axes")
@@ -191,45 +201,18 @@ export default function Question(question_data,options) {
 					.data(answers)
 					.enter()
 					.append("g")
-						.attr("class","answer")
+						.attr("class",d=>`answer side${Math.abs(d.side)}`)
 						.classed("dem",d=>d.from==="clinton")
 						.classed("gop",d=>d.from==="trump")
 						.classed("quest",d=>(d.from!=="trump" && d.from!=="clinton"))
 						.attr("rel",d=>d.from)
-						.attr("transform",(d,i)=>{
+						.each((d,i)=>{
 							let x=options.xscale(d.side),
 								y=i*ANSWER_HEIGHT+INTRO_HEIGHT;
 							d.left=x;
 							d.top=y;
-							return `translate(${x},${y})`
 						})
-	function drawCurve(d,next_answer) {
-		let a=next_answer.left-d.left,
-			b=next_answer.top-d.top,
-			x=a/2,
-			y=b/2,
-			alpha=Math.atan2(y,x),
-			h=50,
-			cx=h * Math.sin(alpha),
-			cy=h * Math.cos(alpha);
-
-		// console.log(a,b)
-		// console.log(alpha,alpha*180/Math.PI)
-		// console.log(cx,cy)
-		points.push({
-			x:0,
-			y:0
-		});
-		points.push({
-			x:x+cx*(a/Math.abs(a)),
-			y:y-cy*(cy/Math.abs(cy))
-		})
-		points.push({
-			x:a,
-			y:b
-		})
-		return arrow_line(points);
-	}
+						
 	function drawArc(d,next_answer,n=1,f=1/3,direction=1) {
 		
 		let x1=0,
@@ -248,8 +231,12 @@ export default function Question(question_data,options) {
 			k=Math.sqrt(x1*x1+y1*y1)*f;
 		}
 		
+		let dir=x1+x2;
 		
-		
+		x1+=d.left;
+		y1+=d.top;
+		x2+=d.left;
+		y2+=d.top;
 		
 
 		var cx = (x1+x2)/2;
@@ -260,8 +247,8 @@ export default function Question(question_data,options) {
 
 
 		let dd = Math.sqrt(dx*dx+dy*dy);
-		let ex = cx + dy/dd * k * (x1+x2<0?-1:1)*(1-(n-1)/2)*direction;
-		let ey = cy - dx/dd * k * (x1+x2<0?-1:1)*(1-(n-1)/2)*direction;
+		let ex = cx + dy/dd * k * (dir<0?-1:1)*(1-(n-1)/2)*direction;
+		let ey = cy - dx/dd * k * (dir<0?-1:1)*(1-(n-1)/2)*direction;
 		//dwg.path("M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2).stroke({width:1}).fill('none');
 		console.log("path","M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2)
 			
@@ -309,22 +296,25 @@ export default function Question(question_data,options) {
 					} else {
 						let a=next_answer.left-d.left,
 							b=next_answer.top-d.top;
+
+						
+
 						let points=[];
 						points.push({
-							x:0,
-							y:0
+							x:d.left,
+							y:d.top
 						})
 						points.push({
-							x:0,
-							y:ANSWER_HEIGHT*CURVE_DISTANCE
+							x:d.left,
+							y:d.top+ANSWER_HEIGHT*CURVE_DISTANCE
 						})
 						points.push({
-							x:a,
-							y:b-ANSWER_HEIGHT*CURVE_DISTANCE
+							x:a+d.left,
+							y:b-ANSWER_HEIGHT*CURVE_DISTANCE+d.top
 						})
 						points.push({
-							x:a,
-							y:b
+							x:a+d.left,
+							y:b+d.top
 						})
 						let p=main_line(points),
 			    			p_space=p.replace(/[,]/gi," ").replace(/L/gi," L ").replace(/M/gi,"M "),
@@ -333,28 +323,37 @@ export default function Question(question_data,options) {
 					}
 				}
 			})
+			//.style("stroke","url(#linearGradient)")
 			.classed("jump",(d,i)=>{
 				let next_answer=answers[i+1];
 				return ((next_answer.from==="clinton" && d.from==="trump")
 						||
 						(next_answer.from==="trump" && d.from==="clinton"))
 			})
+			.classed("left",(d,i)=>{
+				let next_answer=answers[i+1];
+				return next_answer.from==="trump"
+			})
+			.classed("right",(d,i)=>{
+				let next_answer=answers[i+1];
+				return next_answer.from==="clinton"
+			})
 
 	answer.append("circle")
 				.attrs({
-					cx:0,
-					cy:0,
+					cx:d=>d.left,
+					cy:d=>d.top,
 					r:5
 				})
 	answer.append("circle")
 				.attrs({
 					"class":"big",
-					cx:0,
-					cy:0,
+					cx:d=>d.left,
+					cy:d=>d.top,
 					r:10
 				})
 
-	answer
+	/*answer
 		.filter(d=>(d.toc && d.toc.indexOf("against")>-1))
 				.append("path")
 						.attrs({
@@ -367,7 +366,7 @@ export default function Question(question_data,options) {
 								return wave(data,4);
 							},
 							"marker-end":(d)=>(`url(#arrow-${d.party})`)
-						})
+						})*/
 
 	let axis=axes.selectAll("g.axis")
 			.data([-2,-1,0,1,2])
@@ -465,15 +464,77 @@ export default function Question(question_data,options) {
   		let shadow=defs
   						.append("filter")
   							.attr("id","dropShadow")
-  							.html(`<feGaussianBlur in="SourceGraphic" stdDeviation="3" />`);
-  							/*.html(`
-    <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
-    <feOffset dx="2" dy="4" />
-    <feMerge>
-        <feMergeNode />
-        <feMergeNode in="SourceGraphic" />
-    </feMerge>`)*/
-  		
+  							.html(`<feGaussianBlur in="SourceGraphic" stdDeviation="2" />`);
+	}
+
+	function addGradient(defs) {
+
+		let stops=[
+			{
+				offset:"0%",
+				color:"#AF0C53"
+			},
+			{
+				offset:"50%",
+				color:"#fc3b1e"
+			},
+			{
+				offset:"50%",
+				color:"#3fa9f5"
+			},
+			{
+				offset:"100%",
+				color:"#7ac943"
+			}
+		]
+
+		let gradients=[
+			{
+				id:"left",
+				x1:0,
+				x2:(WIDTH-(margins.left+margins.right))/2,
+				stops:[
+					stops[0],
+					stops[1]
+				]
+			},
+			{
+				id:"right",
+				x1:(WIDTH-(margins.left+margins.right))/2,
+				x2:WIDTH-(margins.left+margins.right),
+				stops:[
+					stops[2],
+					stops[3]
+				]
+			},
+			{
+				id:"jump",
+				x1:0,
+				x2:WIDTH-(margins.left+margins.right),
+				stops:stops
+			}
+		]
+		
+		defs.selectAll("linearGradient")
+							.data(gradients)
+							.enter()
+							.append("linearGradient")
+								.attrs({
+									id:d=>d.id,
+									"gradientUnits":"userSpaceOnUse",
+									x1:d=>d.x1,
+									x2:d=>d.x2,
+									y1:0,
+									y2:0
+								})
+								.selectAll("stop")
+									.data(d=>d.stops)
+									.enter()
+									.append("stop")
+										.attrs({
+											offset:d=>d.offset,
+											"stop-color":d=>d.color
+										})
 	}
 	this.getTop=()=>{
 		return container.node().getBoundingClientRect();
