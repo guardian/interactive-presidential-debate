@@ -484,7 +484,7 @@ export default function Question(question_data,options) {
 			},
 			{
 				offset:"100%",
-				color:"#7ac943"
+				color:"#002E5B"
 			}
 		]
 

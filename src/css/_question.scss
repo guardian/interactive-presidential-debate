@@ -54,7 +54,7 @@
 			top:0;
 			left:0;
 			width:100%;
-			@include fs-bodyCopy(1);
+			@include fs-bodyCopy(2);
 			
 			
 			div.key-concept {
@@ -68,7 +68,7 @@
 				$title-lineheight: $title-pad + 1;
 				$bg: rgba(0,0,0,0.7);
 				$bg_yellow: rgba(255, 255, 177,0.8);
-					
+
 				p {
 					visibility: hidden;
 					//padding:5px;
@@ -86,7 +86,7 @@
 						color:white;
 					    background: $bg;
 					    padding: 6px;
-					    line-height: 26px;
+					    line-height: 28px;
 					}
 					span.highlight--wrapping {
 						position: relative;
@@ -94,6 +94,44 @@
 						padding-left: 0;
 						box-shadow: $title-pad 0 0 $bg,  
 									$title-pad*-1 0 0 $bg;
+					}
+				}
+				&.gop {
+					span.highlight {
+						color:white;
+						background:$gop;
+					}
+					span.highlight--wrapping {
+						box-shadow: $title-pad 0 0 $gop,  
+									$title-pad*-1 0 0 $gop;
+					}
+					&.evasive {
+						span.highlight {
+							background:$gop-evasive;
+						}
+						span.highlight--wrapping {
+							box-shadow: $title-pad 0 0 $gop-evasive,  
+										$title-pad*-1 0 0 $gop-evasive;
+						}	
+					}
+				}
+				&.dem {
+					span.highlight {
+						color:white;
+						background:$dem;
+					}
+					span.highlight--wrapping {
+						box-shadow: $title-pad 0 0 $dem,  
+									$title-pad*-1 0 0 $dem;
+					}
+					&.evasive {
+						span.highlight {
+							background:$dem-evasive;
+						}
+						span.highlight--wrapping {
+							box-shadow: $title-pad 0 0 $dem-evasive,  
+										$title-pad*-1 0 0 $dem-evasive;
+						}	
 					}
 				}
 				&.quest {
