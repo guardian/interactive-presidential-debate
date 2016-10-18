@@ -10,7 +10,7 @@
 		@include fs-bodyCopy(1);
 		margin:0 10px;
 		@include mq(tablet) {
-			margin:0 20px;
+			//margin:0 20px;
 			//font-size:24px;
 			//line-height: 28px;
 			//text-align: center;
@@ -63,6 +63,12 @@
 				
 				padding-left:10px;
 				padding-right:10px;
+
+				$title-pad: 0.25em;
+				$title-lineheight: $title-pad + 1;
+				$bg: rgba(0,0,0,0.7);
+				$bg_yellow: rgba(255, 255, 177,0.8);
+					
 				p {
 					visibility: hidden;
 					//padding:5px;
@@ -73,9 +79,8 @@
 					display: table;
 					margin:0 auto;
 					
-					$title-pad: 0.25em;
-					$title-lineheight: $title-pad + 1;
-					$bg: rgba(0,0,0,0.7);
+					
+
 					span.highlight {
 						display: inline;
 						color:white;
@@ -88,7 +93,17 @@
 						left: $title-pad;
 						padding-left: 0;
 						box-shadow: $title-pad 0 0 $bg,  
-						$title-pad*-1 0 0 $bg;
+									$title-pad*-1 0 0 $bg;
+					}
+				}
+				&.quest {
+					span.highlight {
+						color:black;
+						background:$bg_yellow;
+					}
+					span.highlight--wrapping {
+						box-shadow: $title-pad 0 0 $bg_yellow,  
+									$title-pad*-1 0 0 $bg_yellow;
 					}
 				}
 				&.centered {

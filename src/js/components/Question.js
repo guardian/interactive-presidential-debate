@@ -426,7 +426,7 @@ export default function Question(question_data,options) {
 	kc.append("p")
 		.append("span")
 		.attr("class","highlight highlight--wrapping")
-		.html(d=>`${(d.key || d.text)}`);
+		.html(d=>`${(d.key || d.text).slice(0,150)}`);
 
 	kc
 		.style("margin-top",function(d){
@@ -541,14 +541,14 @@ export default function Question(question_data,options) {
 	}
 	let playing_clip;
 	this.showElement=(top)=>{
-		console.log(question_text);
+		//console.log(question_text);
 		let selected=answers[0];
 		answers.forEach(q=>{
 			if(q.top-(INTRO_HEIGHT+ANSWER_HEIGHT*2)<=top) {
 				selected=q;
 			}
 		})
-		console.log(selected)
+		//console.log(selected)
 		answer.classed("selected",d=>{
 			return d.top===selected.top;
 		})
@@ -562,11 +562,15 @@ export default function Question(question_data,options) {
 				top:selected.top+"px",
 				left:selected.left+"px"
 			})
-		// if(!options.audio.playing() || playing_clip!==selected.clip_id) {
-		// 	options.audio.stop();
-		// 	playing_clip=selected.clip_id;
-		// 	options.audio.play(selected.clip_id);
-		// }
+		/*if(!options.audio.playing() || playing_clip!==selected.clip_id) {
+			options.audio.stop();
+			playing_clip=selected.clip_id;
+			options.audio.play(selected.clip_id);
+		}*/
 		
+	}
+	this.hideElement=()=>{
+		answer.classed("selected",false)
+		kc.classed("selected",false)
 	}
 }
