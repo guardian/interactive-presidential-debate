@@ -59,6 +59,14 @@ export default function Question(question_data,options) {
 	let svg=container.append("svg")
 					//.attr("width",options.width)
 					.attr("height",INTRO_HEIGHT+answers.length*ANSWER_HEIGHT+(margins.top+margins.bottom))
+
+	let box = svg.node().getBoundingClientRect();
+	let WIDTH=box.width;
+	options.xscale.range([
+		0,
+		WIDTH - (margins.left+margins.right)
+	]);
+
 	let defs=svg.append("defs");
 	addArrowDefs(defs);
 	addShadow(defs);
@@ -417,12 +425,20 @@ export default function Question(question_data,options) {
 									return d.top+"px";
 								})
 	kc.append("p")
+		.append("span")
+		.attr("class","highlight highlight--wrapping")
 		.html(d=>`${(d.key || d.text)}`);
 
-	kc.style("margin-top",function(){
-		let box=this.getBoundingClientRect();
-		return (-box.height/2)+"px";
-	})
+	kc
+		.style("margin-top",function(d){
+			let box=this.getBoundingClientRect();
+			d.text_height=box.height;
+			return (-box.height/2)+"px";
+		})
+		.select("p")
+			.style("margin-top",(d)=>{
+				return (d.text_height/2 + 20)+"px";
+			})
 
 	function addArrowDefs(defs) {
 		let marker=defs.selectAll("marker")

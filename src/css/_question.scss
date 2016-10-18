@@ -2,18 +2,24 @@
 	width:100%;
 	margin:10px auto;
 	p.question-summary {
+		@include fs-headline(2);
 		margin:0 20px;
-		@include fs-headline(1);
-		font-size:24px;
-		line-height: 28px;
-		text-align: center;
+		@include mq(tablet) {
+			margin:0 20px;
+			font-size:24px;
+			line-height: 28px;
+			text-align: center;
+		}
 	}
 	div.dialogue {
 		position: relative;
 		width:100%;
 		svg {
-			width:50%;
-			margin-left:25%;
+			width:100%;
+			@include mq(tablet) {
+				width:50%;
+				margin-left:25%;
+			}
 			
 			.marker-arrow.gop {
 				fill:$gop;
@@ -38,79 +44,59 @@
 			left:0;
 			width:100%;
 			@include fs-bodyCopy(1);
-			font-size:12px;
-			line-height: 16px;
+			
+			
 			div.key-concept {
-				width:25%;
-				max-height:6.5em;
-				overflow: hidden;
+				width:calc(100% - 20px);
 				position:absolute;
-				margin-top:-2.25em;
-				// &::before {
-				// 	content:"";
-				// 	position:absolute;
-				// 	top:calc(50% - 15px);
-				// 	width:30px;
-				// 	height:30px;
-				// 	border-radius:15px;
-				// 	background-color:#333;
-				// }
+				
+				padding-left:10px;
+				padding-right:10px;
 				p {
 					visibility: hidden;
+					//padding:5px;
+					//border-radius:10px;
+					//background-color:rgba(0,0,0,0.1);
+					max-height:6.5em;
+					overflow: hidden;
+					display: table;
+					margin:0 auto;
+					
+					$title-pad: 0.25em;
+					$title-lineheight: $title-pad + 1;
+					$bg: rgba(0,0,0,0.7);
+					span.highlight {
+						display: inline;
+						color:white;
+					    background: $bg;
+					    padding: 6px;
+					    line-height: 26px;
+					}
+					span.highlight--wrapping {
+						position: relative;
+						left: $title-pad;
+						padding-left: 0;
+						box-shadow: $title-pad 0 0 $bg,  
+						$title-pad*-1 0 0 $bg;
+					}
+				}
+				&.centered {
+					p {
+						text-align: center;
+					}
 				}
 				&.selected {
 					p {
 						visibility: visible;	
 					}
 				}
-				&.dem {
-					margin-left:65%;
-					&.evasive {
-						margin-left:75%;
-					}
-					p {
-						padding-left:5px;
-					}
-					&::before {
-						background-color: $dem;
-						left:10px;
-					}
-				}
-				&.gop {
-					p {
-						padding-right:5px;
-					}
-					&::before {
-						background-color: $gop;
-						right:10px;
-					}
-					left:10%;
-					&.evasive {
-						left:0
-					}
-				}
-				&.quest {
-					width:35%;
-					&.right {
-						margin-left:50%;
-						padding-left:20px;
-					}
-					&.left {
-						margin-left:14%;
-						padding-right:20px;
-						text-align:right;
-					}
-					&::before {
-						background-color: #bdbdbd;
-					}
-				}
-				p {
-					margin: 0;
-				}
 			}
 			div.face-container {
-				width:50%;
-				margin-left:25%;
+				width:100%;
+				@include mq(tablet) {
+					width:50%;
+					margin-left:25%;
+				}
 				position:absolute;
 
 				div.face {
@@ -145,7 +131,61 @@
 					}
 				}
 			}
-			
+		}
+		@include mq(tablet) {
+			div.key-concepts {
+				div.key-concept {
+					width:25%;					
+					margin-top:-2.25em;
+					
+					
+					&.dem {
+						margin-left:65%;
+						&.evasive {
+							margin-left:75%;
+						}
+						p {
+							padding-left:5px;
+						}
+						&::before {
+							background-color: $dem;
+							left:10px;
+						}
+					}
+					&.gop {
+						p {
+							padding-right:5px;
+						}
+						&::before {
+							background-color: $gop;
+							right:10px;
+						}
+						left:10%;
+						&.evasive {
+							left:0
+						}
+					}
+					&.quest {
+						width:35%;
+						&.right {
+							margin-left:50%;
+							padding-left:20px;
+						}
+						&.left {
+							margin-left:14%;
+							padding-right:20px;
+							text-align:right;
+						}
+						&::before {
+							background-color: #bdbdbd;
+						}
+					}
+					p {
+						margin: 0 !important;
+					}
+				}
+				
+			}
 		}	
 	}
 	

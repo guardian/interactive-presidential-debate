@@ -44,10 +44,7 @@ export default function Debate(data,options) {
 					]);
 
 	let questions=[];
-	xscale.range([
-		0,
-		WIDTH/2 - (margins.left+margins.right)
-	]);
+	
 
 	container.selectAll("div.question")
 					.data(data)
@@ -60,7 +57,6 @@ export default function Debate(data,options) {
 									container:this,
 									margins:margins,
 									xscale:xscale,
-									width:WIDTH/2,
 									audio:options.audio
 								}),
 							position:0
