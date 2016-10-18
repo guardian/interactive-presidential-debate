@@ -1,0 +1,64 @@
+.debate {
+	width:100%;
+	height:500px;
+	
+	svg {
+		.balls {
+			circle {
+				stroke:none;
+				stroke-width:0;
+				fill:#777;
+			}
+			text {
+				text-anchor:middle;
+				font-size:20px;
+				fill:#ff6600;
+			}
+		}
+		.shape {
+			path {
+				fill-opacity:0.1;
+				stroke:#333;
+				stroke-width:2;
+			}
+		}
+		.links {
+			line {
+				stroke:#ddd;
+				stroke-width:2;
+			}
+		}
+		.shapes {
+			circle {
+				stroke:none;
+				stroke-width:0;
+				fill:#666;
+				&.ball-shape {
+					fill:#666;
+				}
+			}
+
+			path {
+				stroke:none;
+				stroke-width:2;
+				fill:none;
+				&.shape {
+					stroke:none;
+					stroke-width:2;
+					fill:#666;
+				}
+				&.path-to-follow {
+					stroke:#000;
+				}
+			}
+		}
+		.debug {
+			circle {
+				fill:gold;
+			}
+		}
+		
+	}
+	
+
+}

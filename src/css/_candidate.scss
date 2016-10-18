@@ -1,0 +1,88 @@
+.candidates {
+	path {
+		fill:none;
+		stroke:#333;
+	}
+	path.main {
+		stroke-width:2;
+		stroke:#bdbdbd;
+		fill:none;
+		//stroke-dasharray:1,4;
+		stroke-linecap:round;
+	}
+	line.against {
+		stroke-width:2;
+		fill:none;
+		shape-rendering:crispEdges;
+		stroke-linejoin:round;
+	}
+	path.against {
+		stroke-width:2;
+		fill:none;
+	}
+	g.answer {
+		circle {
+			stroke:#fff;
+			stroke-width:2;
+			&.big {
+				display: none;
+			}
+		}
+		&.selected {
+			circle.big {
+				display: block;
+			}
+		}
+		path.arrow {
+			
+			stroke:#bdbdbd;
+			stroke-width:2;
+			
+			&.jump {
+				stroke:none;
+				fill:#bdbdbd;
+				fill-opacity:0.8;
+			}
+		}
+		path.shadow {
+			stroke-width:2;
+			stroke:#000;
+			stroke-opacity:0.4;
+		}
+	}
+	g.quest {
+		circle {
+			fill:#bdbdbd;
+		}
+	}
+	g.dem {
+		path {
+			stroke:$dem;
+		}
+		circle {
+			fill:$dem;
+		}
+		rect {
+			fill:$dem;
+		}
+		line.against {
+			stroke:$dem;
+		}
+	}
+
+	g.gop {
+		path {
+			stroke:$gop;
+		}
+		rect {
+			fill:$gop;
+		}
+		circle {
+			fill:$gop;
+		}
+		line.against {
+			stroke:$gop;
+		}
+	}
+
+}

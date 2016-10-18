@@ -1,0 +1,152 @@
+.question {
+	width:100%;
+	margin:10px auto;
+	p.question-summary {
+		margin:0 20px;
+		@include fs-headline(1);
+		font-size:24px;
+		line-height: 28px;
+		text-align: center;
+	}
+	div.dialogue {
+		position: relative;
+		width:100%;
+		svg {
+			width:50%;
+			margin-left:25%;
+			
+			.marker-arrow.gop {
+				fill:$gop;
+			}
+			.marker-arrow.dem {
+				fill:$dem;
+			}
+			g.axis {
+				line {
+					stroke:#ccc;
+					stroke-width:1;
+					stroke-opacity:1;
+					stroke-dasharray:1,5;
+					shape-rendering: crispEdges;
+				}
+			}
+		}
+		div.key-concepts {
+			position:absolute;
+			z-index: 9999;
+			top:0;
+			left:0;
+			width:100%;
+			@include fs-bodyCopy(1);
+			font-size:12px;
+			line-height: 16px;
+			div.key-concept {
+				width:25%;
+				max-height:6.5em;
+				overflow: hidden;
+				position:absolute;
+				margin-top:-2.25em;
+				// &::before {
+				// 	content:"";
+				// 	position:absolute;
+				// 	top:calc(50% - 15px);
+				// 	width:30px;
+				// 	height:30px;
+				// 	border-radius:15px;
+				// 	background-color:#333;
+				// }
+				p {
+					visibility: hidden;
+				}
+				&.selected {
+					p {
+						visibility: visible;	
+					}
+				}
+				&.dem {
+					margin-left:65%;
+					&.evasive {
+						margin-left:75%;
+					}
+					p {
+						padding-left:5px;
+					}
+					&::before {
+						background-color: $dem;
+						left:10px;
+					}
+				}
+				&.gop {
+					p {
+						padding-right:5px;
+					}
+					&::before {
+						background-color: $gop;
+						right:10px;
+					}
+					left:10%;
+					&.evasive {
+						left:0
+					}
+				}
+				&.quest {
+					width:35%;
+					&.right {
+						margin-left:50%;
+						padding-left:20px;
+					}
+					&.left {
+						margin-left:14%;
+						padding-right:20px;
+						text-align:right;
+					}
+					&::before {
+						background-color: #bdbdbd;
+					}
+				}
+				p {
+					margin: 0;
+				}
+			}
+			div.face-container {
+				width:50%;
+				margin-left:25%;
+				position:absolute;
+
+				div.face {
+					position:absolute;
+					width:20px;
+					height:20px;
+					border-radius:20px;
+					background-color:#bdbdbd;
+					//margin-left:-12px;
+					margin-left:8px;
+					margin-top:-12px;
+					border:2px solid #fff;
+					background-color:#bdbdbd;
+					background-repeat: no-repeat;
+				    background-position: center center;
+				    background-size: 90% 90%;
+				    &.gop,&.dem{
+				    	width:34px;
+						height:34px;
+						border-radius:40px;
+						//margin-left:-19px;
+						margin-left:0;
+						margin-top:-19px;
+				    }
+					&.gop {
+						background-image:url(./assets/imgs/trump2.png);
+						background-color: $gop;
+					}
+					&.dem {
+						background-image:url(./assets/imgs/clinton2.png);
+						background-color: $dem;
+					}
+				}
+			}
+			
+		}	
+	}
+	
+}

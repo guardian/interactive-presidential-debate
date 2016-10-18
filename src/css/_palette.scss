@@ -3,3 +3,6 @@
 @function colour($name) {
     @return map-get($pasteup-palette, $name);
 }
+
+$dem:#214583;
+$gop:#E91D0E;
