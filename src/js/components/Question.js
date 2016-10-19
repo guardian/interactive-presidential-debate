@@ -478,6 +478,9 @@ export default function Question(question_data,options) {
 		})
 		.select("p")
 			.style("margin-top",(d)=>{
+				if(d.evasive && d.from==="trump") {
+					return (d.text_height/2 + 45)+"px";
+				}
 				return (d.text_height/2 + 35)+"px";
 			})
 
@@ -611,6 +614,7 @@ export default function Question(question_data,options) {
 			.classed("hidden",false)
 			.classed("dem",()=>(selected.party==="dem"))
 			.classed("gop",()=>(selected.party==="gop"))
+			.classed("evasive",(d)=>selected.evasive)
 			.styles({
 				top:selected.top+"px",
 				left:selected.left+"px"

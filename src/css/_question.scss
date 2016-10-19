@@ -110,6 +110,10 @@
 							padding:2px 5px;
 							display: block;
 							position:absolute;
+							transform:rotate(-19deg)translate(-2px,-3px);
+							@include mq(tablet) {
+								transform:rotate(-19deg)translate(-2px,-8px);
+							}
 						}	
 					}
 				}
@@ -223,20 +227,31 @@
 						background-image:url(./assets/imgs/trump.svg);
 						//background-color: $gop;
 						border-color: $gop;
-						margin-left:-15px;
+						
+						&.evasive {
+							background-image:url(./assets/imgs/trump2.png);
+							border-color: $gop-evasive;
+						}
 					}
 					&.dem {
 						background-image:url(./assets/imgs/clinton2.png);
 						//background-color: $dem;
 						border-color: $dem;
+						margin-left:-15px;
+						&.evasive {
+							background-image:url(./assets/imgs/clinton_ot.svg);
+							border-color: $dem-evasive;
+							margin-left:-15px;
+						}
 					}
+
 				}
 			}
 		}
 		@include mq(tablet) {
 			div.key-concepts {
 				div.key-concept {
-					width:25%;					
+					width:23%;					
 					margin-top:-2.25em;
 					
 					
