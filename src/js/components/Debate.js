@@ -60,34 +60,54 @@ export default function Debate(data,options) {
 
 						console.log(questions[questions.length-1].position)
 					})
-	let status;
-	document.addEventListener("scroll",function(e){
-		let scroll_top=e.target.scrollingElement.scrollTop;
+	/*let status={
+		selected:findQuestion(document.scrollingElement.scrollTop),
+		scroll_top:document.scrollingElement.scrollTop
+	}*/
+	function findQuestion(scroll_top) {
+		console.log("findQuestion",scroll_top)
+		//let scroll_top=e.target.scrollingElement.scrollTop;
 		//console.log(scroll_top)
 		let selected=questions[0];
-		questions.forEach(q=>{
+
+		questions.forEach((q,i)=>{
 			if(q.position.top-100<=scroll_top) {
+				console.log("found question",i,q.position.top,"-100<=",scroll_top)
 				selected=q;
 			}
 		});
-		status={
-			selected:selected,
-			scroll_top:scroll_top
+		console.log("FOUND",selected)
+		return selected;
+	}
+	setTimeout(function(){
+		let status={
+			selected:findQuestion(document.scrollingElement.scrollTop),
+			scroll_top:document.scrollingElement.scrollTop
 		}
-	},false);
+		document.addEventListener("scroll",function(e){
+			let scroll_top=e.target.scrollingElement.scrollTop,
+				selected=findQuestion(scroll_top);
 
-	let frameRequest = requestAnimFrame(function showSelectedElement(time) {
-        if(status) {
-        	status.selected.el.showElement(status.scroll_top - status.selected.position.top);
-			questions.forEach(q=>{
-				if(q.position.top!==status.selected.position.top) {
-					q.el.hideElement();
-				}
-			})	
-        }
-        
+			status={
+				selected:selected,
+				scroll_top:scroll_top
+			}
+		},false);
 
-        frameRequest = requestAnimFrame(showSelectedElement);
-    });
+		let frameRequest = requestAnimFrame(function showSelectedElement(time) {
+	        if(status) {
+	        	status.selected.el.showElement(status.scroll_top - status.selected.position.top);
+				questions.forEach(q=>{
+					if(q.position.top!==status.selected.position.top) {
+						q.el.hideElement();
+					}
+				})	
+	        }
+	        
+
+	        frameRequest = requestAnimFrame(showSelectedElement);
+	    });
+	},1000)
+	
 
 }

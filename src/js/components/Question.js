@@ -87,8 +87,8 @@ export default function Question(question_data,options) {
 	//addArrowDefs(defs);
 	addShadow(defs);
 	addGradient(defs);
-
-	
+	addArms(defs);
+	arms_g.remove();
 
 	let axes=svg.append("g")
 			.attr("class","axes")
@@ -358,15 +358,21 @@ export default function Question(question_data,options) {
 							"transform":d=>`translate(${d.left},${d.top})`
 						})
 	if(!arm.empty()){
-		arm.select(function(d) {
-			if(d.from==="trump") {
-				return this.appendChild(trump_arm.node().cloneNode(true))
-			}
-			if(d.from==="clinton") {
-				return this.appendChild(clinton_arm.node().cloneNode(true))
-			}
-		  //return this.appendChild(document.createElement("line"));
-		});
+		// arm.select(function(d) {
+		// 	if(d.from==="trump") {
+		// 		return this.appendChild(trump_arm.node().cloneNode(true))
+		// 	}
+		// 	if(d.from==="clinton") {
+		// 		return this.appendChild(clinton_arm.node().cloneNode(true))
+		// 	}
+		//   //return this.appendChild(document.createElement("line"));
+		// });
+		arm.append("use")
+				.attrs({
+					x:0,
+					y:0,
+					"xlink:href":d=>`#${d.from}-arm`
+				})
 	}
 
 	answer.append("circle")
@@ -425,7 +431,7 @@ export default function Question(question_data,options) {
 						.append("div")
 						.attr("class","face-container")
 							.append("div")
-								.attr("class","face");
+								.attr("class","face hidden");
 
 	let kc=key_concepts.selectAll("div.key-concept")
 							.data(answers)
@@ -494,6 +500,16 @@ export default function Question(question_data,options) {
   								"d":"M0,2 L0,10 L10,6 z",
   								"class":(d)=>(`marker-arrow ${d}`)
   							})
+	}
+	function addArms(defs) {
+		//defs.append(trump_arm);
+		//defs.append(clinton_arm);
+		defs.select(function(d) {
+				return this.appendChild(trump_arm.node().cloneNode(true))
+			});
+		defs.select(function(d) {
+				return this.appendChild(clinton_arm.node().cloneNode(true))
+			});
 	}
 	function addShadow(defs) {
 		
@@ -592,6 +608,7 @@ export default function Question(question_data,options) {
 			return d.top===selected.top;
 		})
 		face
+			.classed("hidden",false)
 			.classed("dem",()=>(selected.party==="dem"))
 			.classed("gop",()=>(selected.party==="gop"))
 			.styles({

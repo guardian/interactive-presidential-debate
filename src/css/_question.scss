@@ -75,7 +75,7 @@
 					//border-radius:10px;
 					//background-color:rgba(0,0,0,0.1);
 					max-height:6.5em;
-					overflow: hidden;
+					overflow: visible;
 					display: table;
 					margin:0 auto;
 					
@@ -95,6 +95,23 @@
 						box-shadow: $title-pad 0 0 $bg,  
 									$title-pad*-1 0 0 $bg;
 					}
+
+
+				}
+				&.evasive {
+					p {
+						span.highlight::before {
+							content:"off topic";
+							white-space: nowrap;
+							@include fs-textSans(1);
+							font-size:12px;
+							color:gold;
+							text-transform: uppercase;
+							padding:2px 5px;
+							display: block;
+							position:absolute;
+						}	
+					}
 				}
 				&.gop {
 					span.highlight {
@@ -112,7 +129,12 @@
 						span.highlight--wrapping {
 							box-shadow: $title-pad 0 0 $gop-evasive,  
 										$title-pad*-1 0 0 $gop-evasive;
-						}	
+						}
+						span.highlight::before {
+							background-color:$gop-evasive;
+							top:-20px;
+							left:-4px;
+						}
 					}
 				}
 				&.dem {
@@ -131,7 +153,12 @@
 						span.highlight--wrapping {
 							box-shadow: $title-pad 0 0 $dem-evasive,  
 										$title-pad*-1 0 0 $dem-evasive;
-						}	
+						}
+						span.highlight::before {
+							background-color:$dem-evasive;
+							top:-20px;
+							left:-4px;
+						}
 					}
 				}
 				&.quest {
@@ -162,9 +189,12 @@
 					margin-left:25%;
 				}
 				position:absolute;
-
+				
 				div.face {
 					position:absolute;
+					&.hidden {
+						visibility: hidden;
+					}
 					width:20px;
 					height:20px;
 					border-radius:20px;
@@ -193,6 +223,7 @@
 						background-image:url(./assets/imgs/trump.svg);
 						//background-color: $gop;
 						border-color: $gop;
+						margin-left:-15px;
 					}
 					&.dem {
 						background-image:url(./assets/imgs/clinton2.png);
@@ -225,6 +256,7 @@
 					&.gop {
 						p {
 							padding-right:5px;
+							float:right;
 						}
 						&::before {
 							background-color: $gop;
