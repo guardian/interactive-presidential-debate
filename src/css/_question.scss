@@ -178,20 +178,26 @@
 				    background-position: center center;
 				    background-size: 90% 90%;
 				    &.gop,&.dem{
-				    	width:34px;
+				    	/* width:34px;
 						height:34px;
 						border-radius:40px;
-						//margin-left:-19px;
 						margin-left:0;
-						margin-top:-19px;
+						margin-top:-19px; */
+						width:50px;
+						height:50px;
+						border-radius:50px;
+						background-color:white;
+						margin-top:-24px;
 				    }
 					&.gop {
-						background-image:url(./assets/imgs/trump2.png);
-						background-color: $gop;
+						background-image:url(./assets/imgs/trump.svg);
+						//background-color: $gop;
+						border-color: $gop;
 					}
 					&.dem {
 						background-image:url(./assets/imgs/clinton2.png);
-						background-color: $dem;
+						//background-color: $dem;
+						border-color: $dem;
 					}
 				}
 			}

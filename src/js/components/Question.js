@@ -17,13 +17,13 @@ import roundPathCorners from "../lib/SVGPathRounding";
 
 import Candidate from "./Candidate"
 
-
+import arms from  '../../assets/imgs/arms.svg!text';
 
 export default function Question(question_data,options) {
 
 	console.log("QUESTION",question_data,options)
 
-
+	
 
 	let question_text=question_data.summary;
 
@@ -66,6 +66,15 @@ export default function Question(question_data,options) {
 
 	let box = svg.node().getBoundingClientRect();
 
+
+	let arms_g=svg
+		.append("g")
+		.attr("transform","translate(-200,-200)");
+
+	arms_g.node().innerHTML=arms;
+
+	let trump_arm=arms_g.select("#trump-arm").attr("transform","scale(0.5)translate(5,0)"),
+		clinton_arm=arms_g.select("#clinton-arm").attr("transform","scale(0.5)translate(-6,0)");
 
 
 	let WIDTH=box.width;
@@ -339,6 +348,27 @@ export default function Question(question_data,options) {
 				return next_answer.from==="clinton"
 			})
 
+	
+	
+	let arm=answer
+				.filter(d=>(d.toc && d.toc.indexOf("against")>-1))
+					.append("g")
+						.attrs({
+							"class":"arm",
+							"transform":d=>`translate(${d.left},${d.top})`
+						})
+	if(!arm.empty()){
+		arm.select(function(d) {
+			if(d.from==="trump") {
+				return this.appendChild(trump_arm.node().cloneNode(true))
+			}
+			if(d.from==="clinton") {
+				return this.appendChild(clinton_arm.node().cloneNode(true))
+			}
+		  //return this.appendChild(document.createElement("line"));
+		});
+	}
+
 	answer.append("circle")
 				.attrs({
 					cx:d=>d.left,
@@ -353,9 +383,15 @@ export default function Question(question_data,options) {
 					r:10
 				})
 
-	/*answer
-		.filter(d=>(d.toc && d.toc.indexOf("against")>-1))
-				.append("path")
+	/*arm=answer
+			.filter(d=>(d.from==="trump" && d.toc && d.toc.indexOf("against")>-1))
+				.append("g")
+					.attr("transform",d=>`translate(${d.left},${d.top})`)
+					.attr("class","arm");
+	if(arm.node())	{
+		arm.node().innerHTML=trump_arm.node().innerHTML;
+	}*/
+				/*.append("path")
 						.attrs({
 							"class":"against",
 							"d":(d)=>{
@@ -436,7 +472,7 @@ export default function Question(question_data,options) {
 		})
 		.select("p")
 			.style("margin-top",(d)=>{
-				return (d.text_height/2 + 20)+"px";
+				return (d.text_height/2 + 35)+"px";
 			})
 
 	function addArrowDefs(defs) {

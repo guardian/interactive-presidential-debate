@@ -1,5 +1,5 @@
 .candidates {
-	path {
+	path.arrow {
 		fill:none;
 		stroke:#333;
 	}
@@ -48,15 +48,16 @@
 		}
 		path.shadow {
 			stroke-width:2;
-			stroke:#000;
-			stroke-opacity:0.4;
+			stroke:none;
+			fill:#bdbdbd;
+			fill-opacity:0.3;
 		}
 	}
 	g.quest {
 		circle {
 			fill:#bdbdbd;
 		}
-		path {
+		> path {
 			stroke:#bdbdbd;
 		}
 		path.left {
@@ -67,7 +68,7 @@
 		}
 	}
 	g.dem {
-		path {
+		> path {
 			//stroke:$dem;
 			stroke:url(#right);
 		}
@@ -88,7 +89,7 @@
 	}
 
 	g.gop {
-		path {
+		> path {
 			//stroke:$gop;
 			stroke:url(#left);
 		}
@@ -107,5 +108,7 @@
 			stroke:$gop;
 		}
 	}
-
+	g.arm {
+		
+	}
 }

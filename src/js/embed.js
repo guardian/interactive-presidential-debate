@@ -6,6 +6,7 @@ import embedHTML from './text/embed.html!text'
 
 import debate_data from  '../assets/data/debate.json!json';
 
+
 import Debate from "./components/Debate"
 
 import {cancelAnimFrame, requestAnimFrame} from './lib/raf'
@@ -155,6 +156,7 @@ window.init = function init(el, config) {
 		    })
 		}
 	});*/
+	//console.log(arms)
 	let debate=new Debate(
 		    	debate_data,{
 		    	container:el.querySelector(".presidential-debate"),
