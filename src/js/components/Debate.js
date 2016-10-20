@@ -81,14 +81,28 @@ export default function Debate(data,options) {
 		return selected;
 	}
 	if(!options.sample) {
+
 		setTimeout(function(){
+			let scroll_top=0;
+			if(typeof document.scrollingElement!="undefined") {
+				scroll_top=document.scrollingElement.scrollTop;
+			} else {
+				scroll_top=document.documentElement.scrollTop;
+			}
 			let status={
-				selected:findQuestion(document.scrollingElement.scrollTop),
-				scroll_top:document.scrollingElement.scrollTop
+				selected:findQuestion(scroll_top),
+				scroll_top:scroll_top
 			}
 			document.addEventListener("scroll",function(e){
-				let scroll_top=e.target.scrollingElement.scrollTop,
-					selected=findQuestion(scroll_top);
+
+				//console.log(e)
+				let scroll_top;
+				if(typeof document.scrollingElement!="undefined") {
+					scroll_top=document.scrollingElement.scrollTop;
+				} else {
+					scroll_top=document.documentElement.scrollTop;
+				}
+				let selected=findQuestion(scroll_top);
 
 				status={
 					selected:selected,

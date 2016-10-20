@@ -655,12 +655,17 @@ export default function Question(question_data,options) {
 	function addArms(defs) {
 		//defs.append(trump_arm);
 		//defs.append(clinton_arm);
-		defs.select(function(d) {
-				return this.appendChild(trump_arm.node().cloneNode(true))
-			});
-		defs.select(function(d) {
-				return this.appendChild(clinton_arm.node().cloneNode(true))
-			});
+		try {
+			defs.select(function(d) {
+					return this.appendChild(trump_arm.node().cloneNode(true))
+				});
+			defs.select(function(d) {
+					return this.appendChild(clinton_arm.node().cloneNode(true))
+				});	
+		} catch(e) {
+			
+		}
+		
 	}
 	function addShadow(defs) {
 		
