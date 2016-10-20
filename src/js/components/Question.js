@@ -21,7 +21,7 @@ import arms from  '../../assets/imgs/arms.svg!text';
 
 export default function Question(question_data,options) {
 
-	console.log("QUESTION",question_data,options)
+	//console.log("QUESTION",question_data,options)
 
 	
 
@@ -192,9 +192,9 @@ export default function Question(question_data,options) {
     		p_space=p.replace(/[,]/gi," ").replace(/L/gi," L ").replace(/M/gi,"M "),
     		n_p=roundPathCorners(p_space,5);
 
-    	// console.log(p);
-    	// console.log(p_space);
-    	// console.log(n_p);
+    	// //console.log(p);
+    	// //console.log(p_space);
+    	// //console.log(n_p);
 
     	return n_p;
     }
@@ -202,10 +202,10 @@ export default function Question(question_data,options) {
 	/*let answer_path=candidates.append("path")
 						.attr("class","main")
 						.attr("d",()=>{
-							console.log("ANSWER",answers)
+							//console.log("ANSWER",answers)
 							return drawMainLine(answers.map((d,i)=>{
-								//console.log(d,d.side,options.xscale(d.side),i)
-								//console.log(options.xscale(d.side),i*ANSWER_HEIGHT)
+								////console.log(d,d.side,options.xscale(d.side),i)
+								////console.log(options.xscale(d.side),i*ANSWER_HEIGHT)
 								return {
 									x:options.xscale(d.side),
 									y:i*ANSWER_HEIGHT+INTRO_HEIGHT
@@ -266,7 +266,7 @@ export default function Question(question_data,options) {
 		let ex = cx + dy/dd * k * (dir<0?-1:1)*(1-(n-1)/2)*direction;
 		let ey = cy - dx/dd * k * (dir<0?-1:1)*(1-(n-1)/2)*direction;
 		//dwg.path("M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2).stroke({width:1}).fill('none');
-		console.log("path","M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2)
+		//console.log("path","M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2)
 			
 		return "M"+x1+" "+y1+"Q"+ex+" "+ey+" "+x2+" "+y2
 	}
@@ -316,7 +316,7 @@ export default function Question(question_data,options) {
 					.append("tspan")
 						.attrs({
 							x:WIDTH<620?-10:0,
-							y:(d,i)=>(i*16 + (WIDTH<620?-30:0))
+							y:(d,i)=>(i*16 + ((WIDTH<620 && options.sample)?-30:0))
 						})
 						.text(d=>d)
 				
@@ -744,15 +744,15 @@ export default function Question(question_data,options) {
 	}
 	let playing_clip;
 	this.showElement=(top)=>{
-		//console.log(question_text);
+		////console.log(question_text);
 		let selected=answers[0];
 		answers.forEach(q=>{
 			if(q.top-(INTRO_HEIGHT+ANSWER_HEIGHT*2)<=top) {
 				selected=q;
 			}
 		})
-		//console.log(selected)
-		//console.log(top,selected.top)
+		////console.log(selected)
+		////console.log(top,selected.top)
 		if(selected.top - top < 0) {
 			this.hideElement();
 			return;

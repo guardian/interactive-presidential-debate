@@ -16,7 +16,7 @@ import Question from "./Question"
 
 export default function Debate(data,options) {
 
-	console.log(data,options)
+	//console.log(data,options)
 
 	let container=select(options.container)
 			.append("div")
@@ -59,25 +59,25 @@ export default function Debate(data,options) {
 						});
 						questions[questions.length-1].position=questions[questions.length-1].el.getTop();
 
-						console.log(questions[questions.length-1].position)
+						//console.log(questions[questions.length-1].position)
 					})
 	/*let status={
 		selected:findQuestion(document.scrollingElement.scrollTop),
 		scroll_top:document.scrollingElement.scrollTop
 	}*/
 	function findQuestion(scroll_top) {
-		//console.log("findQuestion",scroll_top)
+		////console.log("findQuestion",scroll_top)
 		//let scroll_top=e.target.scrollingElement.scrollTop;
-		//console.log(scroll_top)
+		////console.log(scroll_top)
 		let selected=questions[0];
 
 		questions.forEach((q,i)=>{
 			if(q.position.top-100<=scroll_top) {
-				//console.log("found question",i,q.position.top,"-100<=",scroll_top)
+				////console.log("found question",i,q.position.top,"-100<=",scroll_top)
 				selected=q;
 			}
 		});
-		//console.log("FOUND",selected)
+		////console.log("FOUND",selected)
 		return selected;
 	}
 	if(!options.sample) {

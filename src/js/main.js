@@ -21,18 +21,18 @@ export function init(el, context, config, mediator) {
     	types=["pro","against","defend"],
     	topics=["taxes","email","tax_return","war","jobs","obama","iraq","syria","immigration"];
 
-    console.log(debate_data)
+    //console.log(debate_data)
 
    	let extents={
    		w:extent(debate_data,d=>d.energy)
    	}
-   	console.log("EXTENTS",extents);
+   	//console.log("EXTENTS",extents);
 
    	let container=el.querySelector(".presidential-debate");
-   	console.log(container)
+   	//console.log(container)
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
-        //////console.log(time)
-        console.log(container.getBoundingClientRect().width,container.getBoundingClientRect().height)
+        ////////console.log(time)
+        //console.log(container.getBoundingClientRect().width,container.getBoundingClientRect().height)
         if(container && container.getBoundingClientRect().width>300) {
             cancelAnimFrame(checkInnerHTML);
            	
