@@ -52,7 +52,8 @@ export default function Debate(data,options) {
 									container:this,
 									margins:margins,
 									xscale:xscale,
-									audio:options.audio
+									audio:options.audio,
+									sample:options.sample
 								}),
 							position:0
 						});
@@ -79,35 +80,38 @@ export default function Debate(data,options) {
 		console.log("FOUND",selected)
 		return selected;
 	}
-	setTimeout(function(){
-		let status={
-			selected:findQuestion(document.scrollingElement.scrollTop),
-			scroll_top:document.scrollingElement.scrollTop
-		}
-		document.addEventListener("scroll",function(e){
-			let scroll_top=e.target.scrollingElement.scrollTop,
-				selected=findQuestion(scroll_top);
-
-			status={
-				selected:selected,
-				scroll_top:scroll_top
+	if(!options.sample) {
+		setTimeout(function(){
+			let status={
+				selected:findQuestion(document.scrollingElement.scrollTop),
+				scroll_top:document.scrollingElement.scrollTop
 			}
-		},false);
+			document.addEventListener("scroll",function(e){
+				let scroll_top=e.target.scrollingElement.scrollTop,
+					selected=findQuestion(scroll_top);
 
-		let frameRequest = requestAnimFrame(function showSelectedElement(time) {
-	        if(status) {
-	        	status.selected.el.showElement(status.scroll_top - status.selected.position.top);
-				questions.forEach(q=>{
-					if(q.position.top!==status.selected.position.top) {
-						q.el.hideElement();
-					}
-				})	
-	        }
-	        
+				status={
+					selected:selected,
+					scroll_top:scroll_top
+				}
+			},false);
 
-	        frameRequest = requestAnimFrame(showSelectedElement);
-	    });
-	},1000)
+			let frameRequest = requestAnimFrame(function showSelectedElement(time) {
+		        if(status) {
+		        	status.selected.el.showElement(status.scroll_top - status.selected.position.top);
+					questions.forEach(q=>{
+						if(q.position.top!==status.selected.position.top) {
+							q.el.hideElement();
+						}
+					})	
+		        }
+		        
+
+		        frameRequest = requestAnimFrame(showSelectedElement);
+		    });
+		},1000)
+	}
+	
 	
 
 }

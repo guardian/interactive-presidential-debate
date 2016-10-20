@@ -24,13 +24,14 @@ a {
     box-sizing: border-box;
     background-color: white;
 
-    padding: 10px;
+    padding: 0px; //10px;
     @include mq(mobileLandscape) {
         padding: 20px;
     }
 
     @each $bp in (tablet, desktop, leftCol, wide) {
         @include mq($bp) {
+            padding:0;
             max-width: map-get($mq-breakpoints, $bp);
         }
     }

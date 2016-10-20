@@ -5,6 +5,7 @@ import embedHTML from './text/embed.html!text'
 //import MultipleFocus from "./components/MultipleFocus"
 
 import debate_data from  '../assets/data/debate.json!json';
+import debate_sample from  '../assets/data/sample.json!json';
 
 
 import Debate from "./components/Debate"
@@ -18,7 +19,7 @@ import {
 	extent
 } from "d3-array"
 
-import howler from "howler";
+//import howler from "howler";
 
 window.init = function init(el, config) {
     iframeMessenger.enableAutoResize();

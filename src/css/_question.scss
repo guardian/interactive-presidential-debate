@@ -2,20 +2,35 @@
 	width:100%;
 	margin:10px auto;
 	h2.question-title {
-		@include fs-header(2);
+		@include fs-header(3);
 		margin:0 10px;
 		color:#767676;
+		@include mq(tablet) {
+			@include fs-headline(4);
+			color:#000;
+		}
 	}
 	p.question-summary {
 		@include fs-bodyCopy(1);
 		margin:0 10px;
 		@include mq(tablet) {
+			@include fs-bodyCopy(2);
 			//margin:0 20px;
 			//font-size:24px;
 			//line-height: 28px;
 			//text-align: center;
 		}
 	}
+	
+
+    @include mq(desktop) {
+    	h2.question-title,
+    	p.question-summary {
+        	margin-left: 15rem;
+        	max-width: 620px;
+    	}
+    }
+	
 	div.dialogue {
 		position: relative;
 		width:100%;
@@ -25,7 +40,11 @@
 				width:50%;
 				margin-left:25%;
 			}
-			
+			@include mq(desktop) {
+			}
+			.marker-arrow {
+				fill:#cdcdcc;
+			}
 			.marker-arrow.gop {
 				fill:$gop;
 			}
@@ -104,8 +123,8 @@
 							content:"off topic";
 							white-space: nowrap;
 							@include fs-textSans(1);
-							font-size:12px;
-							color:gold;
+							font-size:14px;
+							font-weight: bold;
 							text-transform: uppercase;
 							padding:2px 5px;
 							display: block;
@@ -135,7 +154,7 @@
 										$title-pad*-1 0 0 $gop-evasive;
 						}
 						span.highlight::before {
-							background-color:$gop-evasive;
+							color:$gop-evasive;
 							top:-20px;
 							left:-4px;
 						}
@@ -159,7 +178,7 @@
 										$title-pad*-1 0 0 $dem-evasive;
 						}
 						span.highlight::before {
-							background-color:$dem-evasive;
+							color:$dem-evasive;
 							top:-20px;
 							left:-4px;
 						}
@@ -229,12 +248,12 @@
 						border-color: $gop;
 						
 						&.evasive {
-							background-image:url(./assets/imgs/trump2.png);
+							background-image:url(./assets/imgs/trump_ot.svg);
 							border-color: $gop-evasive;
 						}
 					}
 					&.dem {
-						background-image:url(./assets/imgs/clinton2.png);
+						background-image:url(./assets/imgs/clinton.svg);
 						//background-color: $dem;
 						border-color: $dem;
 						margin-left:-15px;

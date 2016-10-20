@@ -1,0 +1,72 @@
+[
+  {
+    "type": "question",
+    "fromz": "AUDIENCE MEMBER",
+    "time": "9:08PM",
+    "summary": "Moderator",
+    "answers": [
+      {
+        "type": "answer",
+        "from": "moderator",
+        "time": "9:08PM",
+        "text": "",
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "pro"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "time": "9:08PM",
+        "text": ["Trump gives","straight answer"],
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "pro"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "evasive": 1,
+        "time": "9:08PM",
+        "text": ["He goes","off topic"],
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "against"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "evasive": 0,
+        "time": "9:08PM",
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "pro"
+      },
+      {
+        "type": "answer",
+        "from": "clinton",
+        "time": "9:08PM",
+        "text": ["Clinton gives","straight answer"],
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "pro"
+      },
+      {
+        "type": "answer",
+        "from": "clinton",
+        "evasive": 1,
+        "time": "9:08PM",
+        "text": ["She goes","off topic"],
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": [],
+        "toc": "pro"
+      }
+    ]
+  }
+]

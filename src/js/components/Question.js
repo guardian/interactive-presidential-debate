@@ -51,13 +51,14 @@ export default function Question(question_data,options) {
 	let INTRO_HEIGHT=42,
 		ANSWER_HEIGHT=42,
 		CURVE_DISTANCE=1/2.5;
-	container.append("h2")
-						.attr("class","question-title")
-						.html(question_text || "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
-	container.append("p")
-						.attr("class","question-summary")
-						.html("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ullam, corporis dicta dolor deserunt voluptate, possimus accusamus eligendi.")
-
+	if(!options.sample) {
+		container.append("h2")
+							.attr("class","question-title")
+							.html(question_text || "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
+		container.append("p")
+							.attr("class","question-summary")
+							.html("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ullam, corporis dicta dolor deserunt voluptate, possimus accusamus eligendi.")
+	}
 	container=container.append("div").attr("class","dialogue");
 	
 	let svg=container.append("svg")
@@ -84,7 +85,10 @@ export default function Question(question_data,options) {
 	]);
 
 	let defs=svg.append("defs");
-	//addArrowDefs(defs);
+	if(options.sample) {
+		addArrowDefs(defs);	
+	}
+	
 	addShadow(defs);
 	addGradient(defs);
 	addArms(defs);
@@ -104,55 +108,11 @@ export default function Question(question_data,options) {
                     .x(d=>(d.x))
                     .y(d=>(d.y))
                     //.curve(curve.tension(0.95))//.alpha(0.5)
-    let curly_line=d3_line()
-                    .x(d=>(d.x))
-                    .y(d=>(d.y))
-                    .curve(curveBasis)
+   
     let arrow_line=d3_line()
                     .x(d=>(d.x))
                     .y(d=>(d.y))
                     .curve(curveBasis)
-
-    let wave=(data,height=20) => {
-    			
-    			let step=data[1],
-    				inner_points=range(4).map(d=>{
-    					return {
-    						x:d*(step/4),
-    						alpha:d*(2*Math.PI/4),
-    						y:Math.sin(d*(2*Math.PI/4))*height
-    					}
-    				});
-    			let new_data=[
-    				{
-    					x:0,
-    					y:0
-    				}
-    			];
-    			
-    			data.forEach(d=>{
-
-    				inner_points.forEach(p=>{
-    					new_data.push({
-    						x:p.x+d+step,
-    						alpha:p.alpha,
-    						y:p.y
-    					})
-    				})
-
-    			})
-
-    			new_data.push({
-    				x:new_data[new_data.length-1].x+step/4,
-    				y:0
-    			})
-    			new_data.push({
-    				x:new_data[new_data.length-1].x+step,
-    				y:0	
-    			})
-
-		    	return curly_line(new_data);
-    		};
 
     let drawMainLine=(data)=>{
     	let points=[];
@@ -276,6 +236,10 @@ export default function Question(question_data,options) {
 						||
 						(next_answer.from==="trump" && d.from==="clinton")
 					) {
+						d.middle={
+							x:(next_answer.left+d.left)/2,
+							y:(next_answer.top+d.top)/2
+						};
 						return drawArc(d,answers[i+1],1,0.05);	
 					} else {
 						return ""
@@ -284,7 +248,31 @@ export default function Question(question_data,options) {
 				},
 				filter:"url(#dropShadow)"
 			})
-
+	if(options.sample) {
+		answer.filter((d,i)=>{
+				if(i>=answers.length-1) {
+					return false;
+				}
+				let next_answer=answers[i+1];
+				return (next_answer.from==="clinton" && d.from==="trump") || (next_answer.from==="trump" && d.from==="clinton")
+			})
+			.append("text")
+				.attrs({
+					"class":"sample-text bypass",
+					"transform":d=>`translate(${d.middle.x-(d.middle.x-d.left)/2},${d.middle.y-15})`
+				})
+				.selectAll("tspan")
+					.data(["They bypass","the moderator"])
+					.enter()
+					.append("tspan")
+						.attrs({
+							x:0,
+							y:(d,i)=>i*16
+						})
+						.text(d=>d)
+				
+	}
+	
 
 	answer.filter((d,i)=>{
 			return i<answers.length-1
@@ -347,8 +335,45 @@ export default function Question(question_data,options) {
 				let next_answer=answers[i+1];
 				return next_answer.from==="clinton"
 			})
-
+	if(options.sample) {
+		answer
+			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)))
+			.append("path")
+				.attrs({
+					"class":"sample-arrow",
+					"d":(d)=>{
+						return `M${d.left},0L${d.left},${d.top-35}`;
+					},
+					"marker-end": "url(#arrow-sample)"
+				})
+		answer
+			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)))
+			.append("text")
+				.attrs({
+					"class":d=>(`sample-text ${d.from} ${d.evasive?"evasive":""}`),
+					"transform":d=>{
+						let delta=5;
+						if(d.from==="clinton" && d.evasive) {
+							delta=-5;
+						}
+						if(d.from==="trump" && !d.evasive) {
+							delta=-5;
+						}
+						return `translate(${d.left+delta},${d.top-70})`
+					}
+				})
+				.selectAll("tspan")
+					.data(d=>d.text)
+					.enter()
+					.append("tspan")
+						.attrs({
+							x:0,
+							y:(d,i)=>(i*16)
+						})
+						.text(d=>d)
+	}
 	
+
 	
 	let arm=answer
 				.filter(d=>(d.toc && d.toc.indexOf("against")>-1))
@@ -373,6 +398,16 @@ export default function Question(question_data,options) {
 					y:0,
 					"xlink:href":d=>`#${d.from}-arm`
 				})
+		if(options.sample) {
+			arm.append("text")
+					.attrs({
+						"class":"sample-text",
+						"x":65,
+						"y":5
+					})
+					.text("Refers to Clinton")
+
+		}
 	}
 
 	answer.append("circle")
@@ -381,6 +416,17 @@ export default function Question(question_data,options) {
 					cy:d=>d.top,
 					r:5
 				})
+	if(options.sample) {
+		answer
+			.filter(d=>(d.from!=="clinton" && d.from!=="trump"))
+			.append("text")
+				.attrs({
+					"class":"sample-text moderator",
+					x:d=>d.left,
+					y:d=>d.top-10
+				})
+				.text("Moderator")
+	}
 	answer.append("circle")
 				.attrs({
 					"class":"big",
@@ -389,39 +435,22 @@ export default function Question(question_data,options) {
 					r:10
 				})
 
-	/*arm=answer
-			.filter(d=>(d.from==="trump" && d.toc && d.toc.indexOf("against")>-1))
+	
+	if(!options.sample) {
+		let axis=axes.selectAll("g.axis")
+				.data([-2,-1,0,1,2])
+				.enter()
 				.append("g")
-					.attr("transform",d=>`translate(${d.left},${d.top})`)
-					.attr("class","arm");
-	if(arm.node())	{
-		arm.node().innerHTML=trump_arm.node().innerHTML;
-	}*/
-				/*.append("path")
-						.attrs({
-							"class":"against",
-							"d":(d)=>{
-								let step=((options.xscale(0) - options.xscale(d.side))/2)/10,
-									data=range(3).map((d)=>{
-										return d*step;
-									})
-								return wave(data,4);
-							},
-							"marker-end":(d)=>(`url(#arrow-${d.party})`)
-						})*/
-
-	let axis=axes.selectAll("g.axis")
-			.data([-2,-1,0,1,2])
-			.enter()
-			.append("g")
-				.attr("class","axis");
-	axis.append("line")
-			.attrs({
-				x1:d=>options.xscale(d),
-				y1:answers[0].top,
-				x2:d=>options.xscale(d),
-				y2:answers[answers.length-1].top
-			})
+					.attr("class","axis");
+		axis.append("line")
+				.attrs({
+					x1:d=>options.xscale(d),
+					y1:answers[0].top,
+					x2:d=>options.xscale(d),
+					y2:answers[answers.length-1].top
+				})	
+	}
+	
 
 	let key_concepts=container.append("div")
 					.attr("class","key-concepts");
@@ -432,61 +461,62 @@ export default function Question(question_data,options) {
 						.attr("class","face-container")
 							.append("div")
 								.attr("class","face hidden");
-
-	let kc=key_concepts.selectAll("div.key-concept")
-							.data(answers)
-							.enter()
-							.append("div")
-								.attr("class","key-concept")
-								.classed("dem",d=>d.from==="clinton")
-								.classed("gop",d=>d.from==="trump")
-								.classed("quest",d=>(d.from!=="trump" && d.from!=="clinton"))
-								.classed("evasive",d=>d.evasive)
-								.classed("left",(d,i)=>{
-									if(d.from==="trump" || d.from==="clinton") {
+	let kc;
+	if(!options.sample) {
+		kc=key_concepts.selectAll("div.key-concept")
+								.data(answers)
+								.enter()
+								.append("div")
+									.attr("class","key-concept")
+									.classed("dem",d=>d.from==="clinton")
+									.classed("gop",d=>d.from==="trump")
+									.classed("quest",d=>(d.from!=="trump" && d.from!=="clinton"))
+									.classed("evasive",d=>d.evasive)
+									.classed("left",(d,i)=>{
+										if(d.from==="trump" || d.from==="clinton") {
+											return false;
+										}
+										if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="clinton") {
+											return true;	
+										}
 										return false;
-									}
-									if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="clinton") {
-										return true;	
-									}
-									return false;
-								})
-								.classed("right",(d,i)=>{
-									if(d.from==="trump" || d.from==="clinton") {
-										return false;
-									}
-									if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="trump") {
+									})
+									.classed("right",(d,i)=>{
+										if(d.from==="trump" || d.from==="clinton") {
+											return false;
+										}
+										if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="trump") {
+											return true;
+										} else if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="clinton"){
+											return false;
+										}
 										return true;
-									} else if(d.from!=="trump" && d.from!=="clinton" && answers[i+1] && answers[i+1].from==="clinton"){
-										return false;
-									}
-									return true;
-								})
-								.style("top",(d,i)=>{
-									return d.top+"px";
-								})
-	kc.append("p")
-		.append("span")
-		.attr("class","highlight highlight--wrapping")
-		.html(d=>`${(d.key || d.text).slice(0,150)}`);
+									})
+									.style("top",(d,i)=>{
+										return d.top+"px";
+									})
+		kc.append("p")
+			.append("span")
+			.attr("class","highlight highlight--wrapping")
+			.html(d=>`${(d.key || d.text).slice(0,150)}`);
 
-	kc
-		.style("margin-top",function(d){
-			let box=this.getBoundingClientRect();
-			d.text_height=box.height;
-			return (-box.height/2)+"px";
-		})
-		.select("p")
-			.style("margin-top",(d)=>{
-				if(d.evasive && d.from==="trump") {
-					return (d.text_height/2 + 45)+"px";
-				}
-				return (d.text_height/2 + 35)+"px";
+		kc
+			.style("margin-top",function(d){
+				let box=this.getBoundingClientRect();
+				d.text_height=box.height;
+				return (-box.height/2)+"px";
 			})
-
+			.select("p")
+				.style("margin-top",(d)=>{
+					if(d.evasive && d.from==="trump") {
+						return (d.text_height/2 + 45)+"px";
+					}
+					return (d.text_height/2 + 35)+"px";
+				})
+	}
 	function addArrowDefs(defs) {
 		let marker=defs.selectAll("marker")
-  					.data(["gop","dem"])
+  					.data(["sample"])
   					.enter()
   						.append("marker")
   						.attrs({
@@ -501,7 +531,7 @@ export default function Question(question_data,options) {
   						.append("path")
   							.attrs({
   								"d":"M0,2 L0,10 L10,6 z",
-  								"class":(d)=>(`marker-arrow ${d}`)
+  								"class":(d)=>(`marker-arrow`)
   							})
 	}
 	function addArms(defs) {

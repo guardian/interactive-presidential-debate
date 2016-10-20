@@ -1,0 +1,141 @@
+.intro {
+	overflow:visible;
+	width:80%;
+	margin:0 auto;
+	position:relative;
+	
+	@include mq(tablet) {
+		margin-left:25%;
+		width:50%;
+		padding:0 20px;
+	} 
+
+	svg {
+		margin-left:0 !important;
+		width:100% !important;
+
+		path.sample-arrow {
+			stroke:#cdcdcc;
+			stroke-width:2;
+			shape-rendering: crispEdges;
+		}
+
+		text.sample-text {
+			@include fs-textSans(1);
+			@include mq(tablet) {
+				@include fs-textSans(2);
+			}
+			fill:#888;
+			text-anchor:middle;
+			&.bypass {
+				text-anchor:start;
+			}
+			@include mq(tablet) {
+				fill:#cdcdcc;
+				&.moderator {
+					text-anchor:middle;
+				}
+				&.clinton {
+					text-anchor:start;
+					&.evasive {
+						text-anchor:end;	
+					}
+				}
+				&.trump {
+					text-anchor:end;
+					&.evasive {
+						text-anchor:start;
+					}
+				}
+			}
+		}
+	}
+	// @include mq(desktop) {
+	// 	margin-left: 15rem;
+ //        max-width: 620px;
+	// }
+	.bodies {
+		height:60px;
+		@include mq(tablet) {
+			height:180px;
+		}
+		position:relative;
+		.body {
+			width:20%;
+			float:left;
+			height:100%;
+			display: table-cell;
+			vertical-align: bottom;
+			position:absolute;
+			
+			&:first-child {
+				left:0px;
+				div.count-off-topic {
+					color:$gop-evasive;
+					text-align:right;
+					margin-left:-10px;
+					@include mq(tablet) {
+						text-align:right;
+						margin-left:-70px;
+					}
+				}
+
+			}
+			&:nth-child(0n+2) {
+				left:calc(20% + 40px);
+			}
+			&:nth-child(0n+3) {
+				
+			}
+			&:nth-child(0n+4) {
+				//left:calc(60% + 80px);
+				left:70%;
+			}
+			&:nth-child(0n+5) {
+				//left:calc(80% + 80px);
+				left:90%;
+				div.count-off-topic {
+					color:$dem-evasive;
+					@include mq(tablet) {
+						margin-left:40px;
+					}
+				}
+			}
+
+			img {
+				width:110%;
+				height:auto;
+				position: absolute;
+				bottom:0;
+				left:-50%;
+			}
+
+			div.count-off-topic {
+				position: absolute;
+				bottom:-40px;
+				z-index:9999;
+				@include mq(tablet) {
+					bottom:-68px;
+				}
+				b {
+					
+					@include fs-textSans(1);
+					@include mq(tablet) {
+						display: block;
+						font-size: 40px;
+						line-height: 30px;
+						font-weight: normal;
+					}
+				}
+				span {
+					@include fs-textSans(1);
+					@include mq(tablet) {
+						@include fs-textSans(2);
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+	}
+	
+}
