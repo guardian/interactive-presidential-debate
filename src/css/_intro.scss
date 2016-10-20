@@ -30,6 +30,9 @@
 			&.bypass {
 				text-anchor:start;
 			}
+			&.arm {
+				text-anchor:start;	
+			}
 			@include mq(tablet) {
 				fill:#cdcdcc;
 				&.moderator {
@@ -47,6 +50,7 @@
 						text-anchor:start;
 					}
 				}
+
 			}
 		}
 	}

@@ -401,7 +401,7 @@ export default function Question(question_data,options) {
 		if(options.sample) {
 			arm.append("text")
 					.attrs({
-						"class":"sample-text",
+						"class":"sample-text arm",
 						"x":65,
 						"y":5
 					})
