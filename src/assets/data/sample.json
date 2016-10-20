@@ -39,6 +39,16 @@
       {
         "type": "answer",
         "from": "trump",
+        "evasive": 1,
+        "time": "9:08PM",
+        "text": ["He goes","off topic"],
+        "key": "&hellip;",
+        "timestamp": 141,
+        "topics": []
+      },
+      {
+        "type": "answer",
+        "from": "trump",
         "evasive": 0,
         "time": "9:08PM",
         "key": "&hellip;",

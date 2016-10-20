@@ -315,8 +315,8 @@ export default function Question(question_data,options) {
 					.enter()
 					.append("tspan")
 						.attrs({
-							x:0,
-							y:(d,i)=>i*16
+							x:WIDTH<620?-10:0,
+							y:(d,i)=>(i*16 + (WIDTH<620?-30:0))
 						})
 						.text(d=>d)
 				
@@ -442,7 +442,15 @@ export default function Question(question_data,options) {
 					}
 					return d.left-50;
 				},
-				y:d=>d.top-85,
+				y:d=>{
+					if(d.from==="trump" && !d.evasive && options.sample) {
+						return d.top+105	
+					}
+					if(d.from==="clinton" && !d.evasive && options.sample) {
+						return d.top+35	
+					}
+					return d.top-85
+				},
 				width:100,
 				height:35
 			})
@@ -458,6 +466,12 @@ export default function Question(question_data,options) {
 						}
 						if(d.from==="trump" && !d.evasive) {
 							delta=-5;
+						}
+						if(d.from==="trump" && !d.evasive && options.sample) {
+							return `translate(${d.left+delta},${d.top+140})`	
+						}
+						if(d.from==="clinton" && !d.evasive && options.sample) {
+							return `translate(${d.left+delta},${d.top+40})`	
 						}
 						return `translate(${d.left+delta},${d.top-70})`
 					}

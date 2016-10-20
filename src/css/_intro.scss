@@ -71,6 +71,7 @@
 				left:92%;
 				div.count-off-topic {
 					color:$dem-evasive;
+					margin-left:-10px;
 					@include mq(tablet) {
 						margin-left:40px;
 					}
@@ -78,7 +79,10 @@
 			}
 
 			img {
-				width:110%;
+				width:130%;
+				@include mq(tablet) {
+					width:110%;
+				}
 				max-width: 150px;
 				height:auto;
 				position: absolute;

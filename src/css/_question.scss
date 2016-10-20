@@ -83,7 +83,7 @@
 				@include mq(tablet) {
 					@include fs-textSans(2);
 				}
-				fill:#888;
+				fill:#999;
 				text-anchor:middle;
 				&.bypass {
 					text-anchor:start;
@@ -92,7 +92,7 @@
 					text-anchor:start;	
 				}
 				@include mq(tablet) {
-					fill:#cdcdcc;
+					fill:#999;
 					&.moderator {
 						text-anchor:middle;
 					}
