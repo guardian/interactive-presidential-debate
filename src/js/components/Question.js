@@ -616,7 +616,7 @@ export default function Question(question_data,options) {
 		kc.append("p")
 			.append("span")
 			.attr("class","highlight highlight--wrapping")
-			.html(d=>`${(d.key || d.text.slice(0,150))}`);
+			.html(d=>`${(d.key || d.text.slice(0,200))}`);
 
 		kc
 			.style("margin-top",function(d){
@@ -663,7 +663,7 @@ export default function Question(question_data,options) {
 					return this.appendChild(clinton_arm.node().cloneNode(true))
 				});	
 		} catch(e) {
-			
+
 		}
 		
 	}
