@@ -1,6 +1,6 @@
 import mainHTML from './text/main.html!text'
 
-import debate_data from  '../assets/data/debate.json!json';
+import debate_data from  '../assets/data/debate_3.json!json';
 import debate_sample from  '../assets/data/sample.json!json';
 
 import Debate from "./components/Debate"
@@ -32,8 +32,8 @@ export function init(el, context, config, mediator) {
    	console.log(container)
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         //////console.log(time)
-        
-        if(container && container.getBoundingClientRect().height) {
+        console.log(container.getBoundingClientRect().width,container.getBoundingClientRect().height)
+        if(container && container.getBoundingClientRect().width>300) {
             cancelAnimFrame(checkInnerHTML);
            	
             let sample_debate=new Debate(

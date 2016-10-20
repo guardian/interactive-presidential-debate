@@ -66,6 +66,52 @@
 			.stop2 {
 				stop-color:green;
 			}
+
+			path.sample-arrow {
+				stroke:#cdcdcc;
+				stroke-width:2;
+				shape-rendering: crispEdges;
+			}
+			rect.sample-bg {
+				fill:rgba(255,255,255,0.75);
+				@include mq(tablet) {
+					fill:none;
+				}
+			}
+			text.sample-text {
+				@include fs-textSans(1);
+				@include mq(tablet) {
+					@include fs-textSans(2);
+				}
+				fill:#888;
+				text-anchor:middle;
+				&.bypass {
+					text-anchor:start;
+				}
+				&.arm {
+					text-anchor:start;	
+				}
+				@include mq(tablet) {
+					fill:#cdcdcc;
+					&.moderator {
+						text-anchor:middle;
+					}
+					&.clinton {
+						text-anchor:start;
+						&.evasive {
+							text-anchor:end;	
+						}
+					}
+					&.trump {
+						text-anchor:end;
+						&.evasive {
+							text-anchor:start;
+						}
+					}
+
+				}
+			}
+
 		}
 		div.key-concepts {
 			position:absolute;
@@ -87,6 +133,10 @@
 				$title-lineheight: $title-pad + 1;
 				$bg: rgba(0,0,0,0.7);
 				$bg_yellow: rgba(255, 255, 177,0.8);
+				
+				&.none {
+					display: none;
+				}
 
 				p {
 					visibility: hidden;
@@ -311,6 +361,10 @@
 							margin-left:14%;
 							padding-right:20px;
 							text-align:right;
+							p {
+								float:right;
+								padding-right:20px;
+							}
 						}
 						&::before {
 							background-color: #bdbdbd;

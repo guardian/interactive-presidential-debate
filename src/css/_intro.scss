@@ -14,45 +14,7 @@
 		margin-left:0 !important;
 		width:100% !important;
 
-		path.sample-arrow {
-			stroke:#cdcdcc;
-			stroke-width:2;
-			shape-rendering: crispEdges;
-		}
-
-		text.sample-text {
-			@include fs-textSans(1);
-			@include mq(tablet) {
-				@include fs-textSans(2);
-			}
-			fill:#888;
-			text-anchor:middle;
-			&.bypass {
-				text-anchor:start;
-			}
-			&.arm {
-				text-anchor:start;	
-			}
-			@include mq(tablet) {
-				fill:#cdcdcc;
-				&.moderator {
-					text-anchor:middle;
-				}
-				&.clinton {
-					text-anchor:start;
-					&.evasive {
-						text-anchor:end;	
-					}
-				}
-				&.trump {
-					text-anchor:end;
-					&.evasive {
-						text-anchor:start;
-					}
-				}
-
-			}
-		}
+		
 	}
 	// @include mq(desktop) {
 	// 	margin-left: 15rem;
@@ -72,12 +34,21 @@
 			vertical-align: bottom;
 			position:absolute;
 			
+			div.count-off-topic {
+				background-color: rgba(255,255,255,0.7);
+				width:60px;
+				@include mq(tablet) {
+					width:auto;
+				}
+			}
+
 			&:first-child {
 				left:0px;
 				div.count-off-topic {
 					color:$gop-evasive;
 					text-align:right;
-					margin-left:-10px;
+					margin-left:-20px;
+					text-align:left;
 					@include mq(tablet) {
 						text-align:right;
 						margin-left:-70px;
@@ -97,7 +68,7 @@
 			}
 			&:nth-child(0n+5) {
 				//left:calc(80% + 80px);
-				left:90%;
+				left:92%;
 				div.count-off-topic {
 					color:$dem-evasive;
 					@include mq(tablet) {
@@ -108,6 +79,7 @@
 
 			img {
 				width:110%;
+				max-width: 150px;
 				height:auto;
 				position: absolute;
 				bottom:0;

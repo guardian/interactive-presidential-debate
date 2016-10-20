@@ -29,9 +29,21 @@ export default function Question(question_data,options) {
 
 	let margins=options.margins;
 
+	let WIDTH=options.container.getBoundingClientRect().width;
+
 	let container=select(options.container)
 					
-						
+	let helpers={
+		"clinton":0,
+		"trump":0,
+		"clinton_ot":0,
+		"trump_ot":0,
+		"bypass":0,
+		"clinton_refers":0,
+		"trump_refers":0,
+		"trump_arm":0,
+		"clinton_arm":0
+	}	
 
 	let answers=question_data.answers
 					//.filter(a=>(a.type!=='question'))
@@ -45,6 +57,40 @@ export default function Question(question_data,options) {
 							d.party="gop"
 							d.side=-1 - (d.evasive?1:0);
 						}
+
+						if(d.from==="clinton" && !helpers.clinton) {
+							d.helper=["She gives","straight answer"]
+							helpers.clinton++;
+						}
+						if(d.from==="clinton" && d.evasive && !helpers.clinton_ot) {
+							d.helper=["She goes","off topic"]
+							helpers.clinton_ot++;
+						}
+
+						if(d.from==="trump" && !helpers.trump) {
+							d.helper=["He gives","straight answer"]
+							helpers.trump++;
+						}
+						if(d.from==="trump" && d.evasive && !helpers.trump_ot) {
+							d.helper=["He goes","off topic"]
+							helpers.trump_ot++;
+						}
+
+						if(d.from==="trump" && d.evasive && !helpers.trump_ot) {
+							d.helper=["He goes","off topic"]
+							helpers.trump_ot++;
+						}
+
+						if(d.from==="clinton" && d.toc==="against" && !helpers.clinton_arm) {
+							d.arm_helper="Refers to Trump"
+							helpers.clinton_arm++;
+						}
+
+						if(d.from==="trump" && d.toc==="against" && !helpers.trump_arm) {
+							d.arm_helper="Refers to Clinton"
+							helpers.trump_arm++;
+						}
+
 						return d;
 					})
 
@@ -55,14 +101,15 @@ export default function Question(question_data,options) {
 		container.append("h2")
 							.attr("class","question-title")
 							.html(question_text || "Lorem ipsum dolor sit amet, consectetur adipisicing elit.")
-		container.append("p")
-							.attr("class","question-summary")
-							.html("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ullam, corporis dicta dolor deserunt voluptate, possimus accusamus eligendi.")
+		// container.append("p")
+		// 					.attr("class","question-summary")
+		// 					.html("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ullam, corporis dicta dolor deserunt voluptate, possimus accusamus eligendi.")
 	}
+
 	container=container.append("div").attr("class","dialogue");
 	
 	let svg=container.append("svg")
-					//.attr("width",options.width)
+					.attr("width",WIDTH)
 					.attr("height",INTRO_HEIGHT+answers.length*ANSWER_HEIGHT+(margins.top+margins.bottom))
 
 	let box = svg.node().getBoundingClientRect();
@@ -78,7 +125,7 @@ export default function Question(question_data,options) {
 		clinton_arm=arms_g.select("#clinton-arm").attr("transform","scale(0.5)translate(-6,0)");
 
 
-	let WIDTH=box.width;
+	WIDTH=box.width;
 	options.xscale.range([
 		0,
 		WIDTH - (margins.left+margins.right)
@@ -248,18 +295,20 @@ export default function Question(question_data,options) {
 				},
 				filter:"url(#dropShadow)"
 			})
-	if(options.sample) {
-		answer.filter((d,i)=>{
+	//if(options.sample) {
+	answer
+			.filter((d,i)=>{
 				if(i>=answers.length-1) {
 					return false;
 				}
 				let next_answer=answers[i+1];
 				return (next_answer.from==="clinton" && d.from==="trump") || (next_answer.from==="trump" && d.from==="clinton")
 			})
+			.filter((d,i)=>(i===0))
 			.append("text")
 				.attrs({
 					"class":"sample-text bypass",
-					"transform":d=>`translate(${d.middle.x-(d.middle.x-d.left)/2},${d.middle.y-15})`
+					"transform":d=>`translate(${d.middle.x-30},${d.middle.y-15})`
 				})
 				.selectAll("tspan")
 					.data(["They bypass","the moderator"])
@@ -271,7 +320,7 @@ export default function Question(question_data,options) {
 						})
 						.text(d=>d)
 				
-	}
+	//}
 	
 
 	answer.filter((d,i)=>{
@@ -320,24 +369,60 @@ export default function Question(question_data,options) {
 					}
 				}
 			})
-			//.style("stroke","url(#linearGradient)")
-			.classed("jump",(d,i)=>{
+			
+			// .classed("jump",(d,i)=>{
+			// 	let next_answer=answers[i+1];
+			// 	return ((next_answer.from==="clinton" && d.from==="trump")
+			// 			||
+			// 			(next_answer.from==="trump" && d.from==="clinton"))
+			// })
+			// .classed("left",(d,i)=>{
+			// 	let next_answer=answers[i+1];
+			// 	return next_answer.from==="trump"
+			// })
+			.style("stroke",(d,i)=>{
 				let next_answer=answers[i+1];
-				return ((next_answer.from==="clinton" && d.from==="trump")
+
+				if((next_answer.from==="clinton" && d.from==="trump")
 						||
-						(next_answer.from==="trump" && d.from==="clinton"))
+						(next_answer.from==="trump" && d.from==="clinton")) {
+					return "none"
+				}
+
+				
+				if(next_answer.from==="trump") {
+					return "url(#left)"
+				}
+				if(next_answer.from==="clinton") {
+					return "url(#right)"
+				}
+
+				if(next_answer.from!=="trump" && next_answer.from!=="clinton") {
+					if(d.from==="trump") {
+						return "url(#left)"
+					}
+					if(d.from==="clinton") {
+						return "url(#right)"
+					}
+				}
 			})
-			.classed("left",(d,i)=>{
+			.style("fill",(d,i)=>{
 				let next_answer=answers[i+1];
-				return next_answer.from==="trump"
-			})
-			.classed("right",(d,i)=>{
-				let next_answer=answers[i+1];
-				return next_answer.from==="clinton"
-			})
-	if(options.sample) {
+				if((next_answer.from==="clinton" && d.from==="trump")
+						||
+						(next_answer.from==="trump" && d.from==="clinton")) {
+					return "url(#jump)";
+				}
+				return "none";
+			}) 
+			// .classed("right",(d,i)=>{
+			// 	let next_answer=answers[i+1];
+			// 	return next_answer.from==="clinton"
+			// })
+
+	//if(options.sample) {
 		answer
-			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)))
+			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)) && (d.helper))
 			.append("path")
 				.attrs({
 					"class":"sample-arrow",
@@ -347,7 +432,22 @@ export default function Question(question_data,options) {
 					"marker-end": "url(#arrow-sample)"
 				})
 		answer
-			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)))
+			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)) && (d.helper))
+			.append("rect")
+			.attrs({
+				"class":"sample-bg",
+				x:d=>{
+					if((d.from==="clinton" && d.evasive) || (d.from==="trump" && !d.evasive)) {
+						return d.left-50;
+					}
+					return d.left-50;
+				},
+				y:d=>d.top-85,
+				width:100,
+				height:35
+			})
+		answer
+			.filter(d=>((d.from==="clinton" || d.from==="trump") && (d.text)) && (d.helper))
 			.append("text")
 				.attrs({
 					"class":d=>(`sample-text ${d.from} ${d.evasive?"evasive":""}`),
@@ -363,7 +463,7 @@ export default function Question(question_data,options) {
 					}
 				})
 				.selectAll("tspan")
-					.data(d=>d.text)
+					.data(d=>d.helper)
 					.enter()
 					.append("tspan")
 						.attrs({
@@ -371,7 +471,7 @@ export default function Question(question_data,options) {
 							y:(d,i)=>(i*16)
 						})
 						.text(d=>d)
-	}
+	//}
 	
 
 	
@@ -416,9 +516,9 @@ export default function Question(question_data,options) {
 					cy:d=>d.top,
 					r:5
 				})
-	if(options.sample) {
+	//if(options.sample) {
 		answer
-			.filter(d=>(d.from!=="clinton" && d.from!=="trump"))
+			.filter((d,i)=>(d.from!=="clinton" && d.from!=="trump" && i===0))
 			.append("text")
 				.attrs({
 					"class":"sample-text moderator",
@@ -426,7 +526,7 @@ export default function Question(question_data,options) {
 					y:d=>d.top-10
 				})
 				.text("Moderator")
-	}
+	//}
 	answer.append("circle")
 				.attrs({
 					"class":"big",
@@ -472,6 +572,7 @@ export default function Question(question_data,options) {
 									.classed("gop",d=>d.from==="trump")
 									.classed("quest",d=>(d.from!=="trump" && d.from!=="clinton"))
 									.classed("evasive",d=>d.evasive)
+									.classed("none",d=>(d.text==="none"))
 									.classed("left",(d,i)=>{
 										if(d.from==="trump" || d.from==="clinton") {
 											return false;
@@ -493,12 +594,15 @@ export default function Question(question_data,options) {
 										return true;
 									})
 									.style("top",(d,i)=>{
+										if(d.from!=="trump" && d.from!=="clinton") {
+											return (d.top - (WIDTH<460?20:0))+"px"
+										}
 										return d.top+"px";
 									})
 		kc.append("p")
 			.append("span")
 			.attr("class","highlight highlight--wrapping")
-			.html(d=>`${(d.key || d.text).slice(0,150)}`);
+			.html(d=>`${(d.key || d.text.slice(0,150))}`);
 
 		kc
 			.style("margin-top",function(d){
@@ -634,6 +738,11 @@ export default function Question(question_data,options) {
 			}
 		})
 		//console.log(selected)
+		//console.log(top,selected.top)
+		if(selected.top - top < 0) {
+			this.hideElement();
+			return;
+		}
 		answer.classed("selected",d=>{
 			return d.top===selected.top;
 		})

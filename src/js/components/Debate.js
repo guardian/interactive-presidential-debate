@@ -66,18 +66,18 @@ export default function Debate(data,options) {
 		scroll_top:document.scrollingElement.scrollTop
 	}*/
 	function findQuestion(scroll_top) {
-		console.log("findQuestion",scroll_top)
+		//console.log("findQuestion",scroll_top)
 		//let scroll_top=e.target.scrollingElement.scrollTop;
 		//console.log(scroll_top)
 		let selected=questions[0];
 
 		questions.forEach((q,i)=>{
 			if(q.position.top-100<=scroll_top) {
-				console.log("found question",i,q.position.top,"-100<=",scroll_top)
+				//console.log("found question",i,q.position.top,"-100<=",scroll_top)
 				selected=q;
 			}
 		});
-		console.log("FOUND",selected)
+		//console.log("FOUND",selected)
 		return selected;
 	}
 	if(!options.sample) {
