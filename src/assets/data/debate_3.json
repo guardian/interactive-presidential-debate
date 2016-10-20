@@ -480,15 +480,7 @@
         "from": "trump",
         "text": "She doesn’t like Putin because Putin has outsmarted at every step of the way, excuse me. Putin has outsmarted her in Syria, he has outsmarted her every step of the way.",
         "toc": "against"
-      }
-    ]
-  },
-  {
-    "type": "question",
-    "from": "CHRIS WALLACE",
-    "text": "Mr. Trump, I’m not a potted plant here. I would like to ask some questions and I would like to ask you this direct question. The top national security officials of this country do believe that Russia has been behind these hacks. Even if you don't know for sure whether they are, do you condemn any interference with Russia in the American election?",
-    "summary":"The next topic is the economy; please explain to me why you believe that your plan will create more jobs and growth for this country and your opponent's plan will not.",
-    "answers": [
+      },
     	{
     		"type":"question",
     		"from":"moderator",
@@ -497,7 +489,7 @@
     	{
     		"type":"question",
     		"from":"moderator",
-    		"text":"Do you condemn any interference with Russia in the American election?"
+    		"text":" Even if you don't know for sure whether they are, do you condemn any interference with Russia in the American election?"
     	},
       {
         "type": "answer",
@@ -514,6 +506,29 @@
         "type": "answer",
         "from": "trump",
         "text": "Of course I condemn. I don't know Putin. I never met Putin this is not my best friend. But if the United States got along with Russia, wouldn’t so bad. Let me tell you, Putin has outsmarted her and Obama at every single step of the way, whether it’s Syria -- you name it, missiles -- take a look at the start up that they signed the Russians have said, according to many many reports, I can't believe they allowed us to do this. They create warheads and we can't. The Russians can't believe it. She has been outsmarted by Putin and all you have to do is look at the Middle East. They’ve taken over. We have spent six trillion dollars, they've taken over the Middle East. She has been outsmarted and outplayed worse than anybody I've ever seen in any government whatsoever.",
+       	"key":"Of course I condemn. I don't know Putin. I never met Putin this is not my best friend. But if the United States got along with Russia, wouldn’t so bad.",
+        "evasive": "true"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "text": "",
+       	"key":"Let me tell you, Putin has outsmarted her and Obama at every single step of the way",
+        "toc": "against",
+        "evasive": "true"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "text": "",
+       	"key":"They create warheads and we can't. The Russians can't believe it",
+        "evasive": "true"
+      },
+      {
+        "type": "answer",
+        "from": "trump",
+        "text": "",
+       	"key":"She has been outsmarted by Putin and all you have to do is look at the Middle East. They’ve taken over.",
         "toc": "against",
         "evasive": "true"
       },
@@ -576,7 +591,7 @@
     "type": "question",
     "from": "CHRIS WALLACE",
     "text": "We are going to move on to the next topic, which is the economy.  I hope we handle that as well as we did immigration, you also have very different ideas of how to get the economy growing faster. Secretary Clinton, in your plan government plays a big role, you see more government spending, more entitlements, more tax credits, more tax penalties. Mr. Trump, you want to get government out with lower taxes and less regulations. We're going to drill down into this a little bit more, but in this overview, please explain to me why you believe that your plan will create more jobs and growth for this country and your opponent's plan will not. In this round, you go first, Secretary Clinton.",
-    "summary":"We are going to move on to the next topic, which is the economy.",
+    "summary":"We are going to move on to the next topic, which is the economy. Please explain to me why you believe that your plan will create more jobs and growth for this country and your opponent's plan will not.",
     "answers": [
     	{
     		"type":"question",
