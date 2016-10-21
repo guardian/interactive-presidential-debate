@@ -28,12 +28,12 @@ export function init(el, context, config, mediator) {
    	}
    	//console.log("EXTENTS",extents);
 
-   	let container=el.querySelector(".presidential-debate");
+  let container=el.querySelector(".presidential-debate");
    	//console.log(container)
 	let frameRequest = requestAnimFrame(function checkInnerHTML(time) {
         ////////console.log(time)
         //console.log(container.getBoundingClientRect().width,container.getBoundingClientRect().height)
-        if(container && container.getBoundingClientRect().width>300) {
+        if(container && container.getBoundingClientRect().width>200) {
             cancelAnimFrame(checkInnerHTML);
            	
             let sample_debate=new Debate(

@@ -1206,14 +1206,14 @@
       {
         "type": "question",
         "from": "CHRIS WALLACE",
-        "text": "Mr. Trump, I want to ask about one must question in this topic. You have been warning at rallies recently that this election is rigged and that Hillary Clinton is in the process of trying to steal it from you. Your running mate Governor Pence pledged on Sunday that he and you, his words, will absolutely accept the result of this election. Today your daughter Ivanka said the same thing. I want to ask you here on the stage tonight, do you make the same commitment that you will absolutely, sir, that you will absolutely accept the result of the selection?",
+        "text": "Mr. Trump, I want to ask about one must question in this topic. You have been warning at rallies recently that this election is rigged and that Hillary Clinton is in the process of trying to steal it from you. Your running mate Governor Pence pledged on Sunday that he and you, his words, will absolutely accept the result of this election. Today your daughter Ivanka said the same thing. I want to ask you here on the stage tonight, do you make the same commitment that you will absolutely, sir, that you will absolutely accept the result of the election?",
         "key":"You have been warning at rallies recently that this election is rigged and that Hillary Clinton is in the process of trying to steal it from you"
       },
       {
         "type": "question",
         "from": "CHRIS WALLACE",
         "text": "",
-        "key":"sir, that you will absolutely accept the result of the selection?"
+        "key":"sir, that you will absolutely accept the result of the election?"
       },
       {
         "type": "answer",
