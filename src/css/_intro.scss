@@ -93,7 +93,7 @@
 
 			div.count-off-topic {
 				position: absolute;
-				bottom:-40px;
+				bottom:-48px;
 				z-index:9999;
 				@include mq(tablet) {
 					bottom:-68px;
